@@ -21,7 +21,8 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
     "slate": "^0.102.0",
-    "slate-react": "^0.102.0"
+    "slate-react": "^0.102.0",
+    "stylelint-csstree-validator": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",

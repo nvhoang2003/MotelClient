@@ -58,13 +58,13 @@ export default function page() {
                 open={openSuccess}
                 handleClose={handleClose}
                 variant='success'
-                message="Login Successfull"
+                message="Login Successful"
             />
             <SnackBar
                 open={openFailed}
                 handleClose={handleClose}
                 variant='error'
-                message="Invalid UserName or Passrord"
+                message="Invalid Username or Password"
             />
             <Container>
                 <Card>
