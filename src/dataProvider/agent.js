@@ -31,6 +31,8 @@ const clearLocalStorage = () => {
     localStorage.clear();
 };
 
+// const getApi = async ()
+
 const postApi = async (url, payload, file) => {
     const token = getLocalStorage('access_token');
     try {
@@ -50,9 +52,11 @@ const postApi = async (url, payload, file) => {
         return err;
     }
 }
-
-
-//Post
+//GET
+const getListPost = (null) => {
+    return get
+}
+//POST
 
 //Login
 const loginByAdmin = (payload) => {
