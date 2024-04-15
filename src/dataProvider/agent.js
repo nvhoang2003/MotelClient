@@ -1,64 +1,146 @@
 import axios from "axios";
 import { PATH_AUTH } from "../routes/path";
 const instance = axios.create({
-    baseURL: `http://localhost:8080/rest`,
-    timeout: 60000
+  baseURL: `http://localhost:8080`,
+  timeout: 60000,
 });
 
 const getLocalStorage = (key) => {
-    if (typeof window !== 'undefined') {
-        const item = localStorage.getItem(key);
-        if (item) {
-            return item;
-        }
+  if (typeof window !== "undefined") {
+    const item = localStorage.getItem(key);
+    if (item) {
+      return item;
     }
-    return null;
+  }
+  return null;
 };
 
 function responseOnSuccessMiddleware(res) {
-    return res;
+  return res;
 }
 
 function responseOnErrorMiddleware(error) {
-    const { status } = error.response;
-    if (status === 401) {
-        localStorage.clear();
-        window.location.href = PATH_AUTH.login;
-    }
-    return error;
+  const { status } = error.response;
+  if (status === 401) {
+    localStorage.clear();
+    window.location.href = PATH_AUTH.login;
+  }
+  return error;
 }
 const clearLocalStorage = () => {
-    localStorage.clear();
+  localStorage.clear();
 };
 
 const postApi = async (url, payload, file) => {
-    const token = getLocalStorage('access_token');
-    try {
-        const res = await instance.post(`/${url}`, payload, {
-            headers: {
-                Authorization: token ? `Bearer ${token}` : 'no-author',
-                'Content-Type': file ? 'multipart/form-data' : 'application/json; charset=utf-8',
-                // 'Access-Control-Allow-Headers':
-                //     'Content-Type, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version, X-File-Name',
-                'Access-Control-Allow-Methods': 'POST',
-                'Access-Control-Allow-Origin': '*',
-            },
-            timeout: 600000
-        });
-        return res;
-    } catch (err) {
-        return err;
-    }
+  const token = getLocalStorage("access_token");
+  try {
+    const res = await instance.post(`/${url}`, payload, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "no-author",
+        "Content-Type": file
+          ? "multipart/form-data"
+          : "application/json; charset=utf-8",
+        // 'Access-Control-Allow-Headers':
+        //     'Content-Type, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version, X-File-Name',
+        "Access-Control-Allow-Methods": "POST",
+        "Access-Control-Allow-Origin": "*",
+      },
+      timeout: 600000,
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+async function putApi(url, payload) {
+  const token = getLocalStorage("access_token");
+  try {
+    const res = await instance.put(`/${url}`, payload, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "no-author",
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
 }
 
+async function deleteApi(url, payload) {
+  const token = getLocalStorage("access_token");
 
+  try {
+    const res = await instance.delete(`/${url}`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "no-author",
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+}
+
+async function getApi(url, params) {
+  // delete all params fail
+  const paramObj = {};
+  if (params && Object.keys(params).length) {
+    Object.keys(params).forEach(function (key) {
+      if (params[key]) {
+        paramObj[key] = params[key];
+      }
+    });
+  }
+
+  const token = getLocalStorage("access_token");
+  try {
+    const res = await instance.get(url, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "no auth",
+      },
+      params: paramObj,
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+}
+
+async function getApiV2(url) {
+  const token = getLocalStorage("access_token");
+  try {
+    const res = await instance.get(url, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "no auth",
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+}
 //Post
 
 //Login
 const loginByAdmin = (payload) => {
-    return postApi('auth/login', payload);
+  return postApi("rest/auth/login", payload);
+};
+
+function getCity() {
+  return getApi("api/city");
 }
 
-export {
-    loginByAdmin,
-}
+const addCity = (payload) => {
+  return postApi("api/city", payload);
+};
+
+const editCity = (payload, id) => {
+  return putApi("api/city/" + id, payload);
+};
+
+const deleteCity = (id) => {
+  return deleteApi("api/city/" + id);
+};
+
+export { loginByAdmin, getCity, addCity, editCity, deleteCity };
