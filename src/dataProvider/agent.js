@@ -1,7 +1,7 @@
 import axios from "axios";
-import { PATH_AUTH } from "../routes/path";
+import { PATH_AUTH, PATH_HOME } from "../routes/path";
 const instance = axios.create({
-    baseURL: `http://localhost:8080/rest`,
+    baseURL: `http://localhost:8080/`,
     timeout: 60000
 });
 
@@ -15,21 +15,29 @@ const getLocalStorage = (key) => {
     return null;
 };
 
+const clearLocalStorage = () => {
+    localStorage.clear();
+};
+
+instance.interceptors.response.use(responseOnSuccessMiddleware, responseOnErrorMiddleware);
+
+
 function responseOnSuccessMiddleware(res) {
     return res;
 }
 
 function responseOnErrorMiddleware(error) {
-    const { status } = error.response;
+    var { status } = error.response;
     if (status === 401) {
         localStorage.clear();
-        window.location.href = PATH_AUTH.login;
+        // window.location.href = PATH_AUTH.login;
+        window.location.href = PATH_HOME.root;
+    }
+    if(status === 403) {
+        window.location.href = PATH_HOME.root;
     }
     return error;
 }
-const clearLocalStorage = () => {
-    localStorage.clear();
-};
 
 // const getApi = async ()
 
@@ -53,16 +61,20 @@ const postApi = async (url, payload, file) => {
     }
 }
 //GET
-const getListPost = (null) => {
-    return get
-}
+// const getListPost = (null) => {
+//     return get
+// }
 //POST
 
 //Login
 const loginByAdmin = (payload) => {
-    return postApi('auth/login', payload);
+    return postApi('rest/auth/login', payload);
+}
+
+const createThePost = (payload) => {
+    return postApi('api/posts', payload)
 }
 
 export {
-    loginByAdmin,
+    loginByAdmin,createThePost
 }
