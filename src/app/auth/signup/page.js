@@ -30,9 +30,10 @@ export default function SignUp() {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log("Passwords do not match");
+      // console.log("Passwords do not match");
+      enqueueSnackbar("Passwords do not match");
     } else {
-      console.log(formData);
+      // console.log(formData);
       const newUser = {
         firstName,
         lastName,
