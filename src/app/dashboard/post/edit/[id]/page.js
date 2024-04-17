@@ -50,7 +50,6 @@ export default function page({ params }) {
             const res = await getPostByid(params.id);
             console.log(res)
             if (res.status < 400) {
-                ''
                 setValue(res.data.content);
             } else {
                 snackbarUtil.error("Can't get the data");

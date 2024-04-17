@@ -131,6 +131,10 @@ async function getApiV2(url) {
     }
 }
 //Post
+const getMyPost = () => {
+    return getApi('api/myposts');
+}
+
 const createThePost = (payload) => {
     return postApi('api/posts', payload)
 }
@@ -141,6 +145,10 @@ const getPostByid = (id) => {
 
 const updateThePost = (id, payload) => {
     return putApi(`api/posts/${id}`, payload);
+}
+
+const deleteThePost = (id) => {
+    return deleteApi(`api/posts/${id}`);
 }
 
 //Login
@@ -173,5 +181,7 @@ export {
     deleteCity,
     createThePost,
     getPostByid,
-    updateThePost
+    updateThePost,
+    getMyPost,
+    deleteThePost
 };
