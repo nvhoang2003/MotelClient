@@ -143,4 +143,30 @@ const deleteCity = (id) => {
   return deleteApi("api/city/" + id);
 };
 
-export { loginByAdmin, getCity, addCity, editCity, deleteCity };
+function getDistrict(id) {
+  return getApi("api/districts/getList/" + id);
+}
+
+function addDistrict(payload) {
+  return postApi("api/districts", payload);
+}
+
+function editDistrict(id, payload) {
+  return putApi("api/districts/" + id, payload);
+}
+
+function deleteDistrict(id) {
+  return deleteApi("api/districts/" + id);
+}
+
+export {
+  loginByAdmin,
+  getCity,
+  addCity,
+  editCity,
+  deleteCity,
+  getDistrict,
+  addDistrict,
+  editDistrict,
+  deleteDistrict,
+};
