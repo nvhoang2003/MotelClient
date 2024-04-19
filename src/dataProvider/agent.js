@@ -1,8 +1,8 @@
 import axios from "axios";
 import { PATH_AUTH, PATH_HOME } from "../routes/path";
 const instance = axios.create({
-    baseURL: `http://localhost:8080/`,
-    timeout: 60000
+  baseURL: `http://localhost:8080/`,
+  timeout: 60000,
 });
 
 const getLocalStorage = (key) => {
@@ -16,27 +16,29 @@ const getLocalStorage = (key) => {
 };
 
 const clearLocalStorage = () => {
-    localStorage.clear();
+  localStorage.clear();
 };
 
-instance.interceptors.response.use(responseOnSuccessMiddleware, responseOnErrorMiddleware);
-
+instance.interceptors.response.use(
+  responseOnSuccessMiddleware,
+  responseOnErrorMiddleware
+);
 
 function responseOnSuccessMiddleware(res) {
   return res;
 }
 
 function responseOnErrorMiddleware(error) {
-    var { status } = error.response;
-    if (status === 401) {
-        localStorage.clear();
-        // window.location.href = PATH_AUTH.login;
-        window.location.href = PATH_HOME.root;
-    }
-    if(status === 403) {
-        window.location.href = PATH_HOME.root;
-    }
-    return error;
+  var { status } = error.response;
+  if (status === 401) {
+    localStorage.clear();
+    // window.location.href = PATH_AUTH.login;
+    window.location.href = PATH_HOME.root;
+  }
+  if (status === 403) {
+    window.location.href = PATH_HOME.root;
+  }
+  return error;
 }
 
 // const getApi = async ()
@@ -137,6 +139,7 @@ const loginByAdmin = (payload) => {
   return postApi("rest/auth/login", payload);
 };
 
+//Address
 function getCity() {
   return getApi("api/city");
 }
@@ -153,4 +156,9 @@ const deleteCity = (id) => {
   return deleteApi("api/city/" + id);
 };
 
-export { loginByAdmin, getCity, addCity, editCity, deleteCity };
+//user
+function getUser() {
+  return getApi("/api/users");
+}
+
+export { loginByAdmin, getCity, addCity, editCity, deleteCity, getUser };
