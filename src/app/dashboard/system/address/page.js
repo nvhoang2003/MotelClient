@@ -26,7 +26,7 @@ import {
 } from "../../../../dataProvider/agent";
 
 export default function page() {
-  const [currentCity, setCurrentCity] = useState();
+  const [currentCity, setCurrentCity] = useState("");
 
   const [cityName, setcityName] = useState("");
 
