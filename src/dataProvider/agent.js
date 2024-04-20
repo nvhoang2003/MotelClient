@@ -181,22 +181,40 @@ const deleteCity = (id) => {
     return deleteApi("api/city/" + id);
 };
 
+function getDistrict(id) {
+  return getApi("api/districts/getList/" + id);
+}
+
+function addDistrict(payload) {
+  return postApi("api/districts", payload);
+}
+
+function editDistrict(id, payload) {
+  return putApi("api/districts/" + id, payload);
+}
+
+function deleteDistrict(id) {
+  return deleteApi("api/districts/" + id);
+}
 //user
 function getUser() {
     return getApi("/api/users");
 }
-
 export default {
-    loginByAdmin,
-    getCity,
-    addCity,
-    editCity,
-    deleteCity,
-    createThePost,
-    getPostByid,
-    updateThePost,
-    getMyPost,
-    deleteThePost,
-    signUpAccount,
-    getUser
+  loginByAdmin,
+  getCity,
+  addCity,
+  editCity,
+  deleteCity,
+  getDistrict,
+  addDistrict,
+  editDistrict,
+  deleteDistrict,
+  createThePost,
+  getPostByid,
+  updateThePost,
+  getMyPost,
+  deleteThePost,
+  signUpAccount,
+  getUser   
 };
