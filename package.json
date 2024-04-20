@@ -21,6 +21,7 @@
     "@tiptap/react": "^2.3.0",
     "@tiptap/starter-kit": "^2.3.0",
     "axios": "^1.6.8",
+    "bootstrap": "^5.3.3",
     "draft-js": "^0.11.7",
     "mui": "^0.0.1",
     "next": "14.0.4",
