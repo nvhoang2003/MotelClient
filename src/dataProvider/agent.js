@@ -1,8 +1,9 @@
 import axios from "axios";
-import { PATH_AUTH, PATH_HOME } from "../routes/path";
+import {PATH_AUTH, PATH_HOME} from "../routes/path";
+
 const instance = axios.create({
-  baseURL: `http://localhost:8080/`,
-  timeout: 60000,
+    baseURL: `http://localhost:8080/`,
+    timeout: 60000,
 });
 
 const getLocalStorage = (key) => {
@@ -16,12 +17,12 @@ const getLocalStorage = (key) => {
 };
 
 const clearLocalStorage = () => {
-  localStorage.clear();
+    localStorage.clear();
 };
 
 instance.interceptors.response.use(
-  responseOnSuccessMiddleware,
-  responseOnErrorMiddleware
+    responseOnSuccessMiddleware,
+    responseOnErrorMiddleware
 );
 
 function responseOnSuccessMiddleware(res) {
@@ -29,7 +30,7 @@ function responseOnSuccessMiddleware(res) {
 }
 
 function responseOnErrorMiddleware(error) {
-    var { status } = error.response;
+    var {status} = error.response;
     if (status === 401) {
         localStorage.clear();
         window.location.href = PATH_AUTH.login;
@@ -131,6 +132,7 @@ async function getApiV2(url) {
         return err;
     }
 }
+
 //Post
 const getMyPost = () => {
     return getApi('api/myposts');
@@ -181,10 +183,10 @@ const deleteCity = (id) => {
 
 //user
 function getUser() {
-  return getApi("/api/users");
+    return getApi("/api/users");
 }
 
-dexport {
+export default {
     loginByAdmin,
     getCity,
     addCity,
@@ -195,6 +197,6 @@ dexport {
     updateThePost,
     getMyPost,
     deleteThePost,
-    signUpAccount, 
+    signUpAccount,
     getUser
 };

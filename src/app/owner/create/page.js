@@ -2,7 +2,6 @@
 import {useState} from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
-import getListD
 
 export default function CreateMotelRoom() {
 
