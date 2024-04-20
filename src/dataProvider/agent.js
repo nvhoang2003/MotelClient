@@ -159,6 +159,11 @@ const loginByAdmin = (payload) => {
     return postApi("rest/auth/login", payload);
 };
 
+//motel
+const getMotelById = (id) => {
+    return getApi(`api/post/${id}`);
+}
+
 //City
 function getCity() {
     return getApi("api/city");
@@ -187,5 +192,6 @@ export {
     updateThePost,
     getMyPost,
     deleteThePost,
-    signUpAccount
+    signUpAccount,
+    getMotelById
 };
