@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import snackbarUtil from "../../../utility/snackbarUtil";
 import { SnackbarProvider } from "notistack";
+import { PATH_DASHBOARD, PATH_HOME, PATH_OWNER, PATH_TENANT } from "../../../routes/path";
 
 export default function page() {
   const [userName, setUserName] = useState("");
@@ -43,7 +44,14 @@ export default function page() {
         snackbarUtil.success("Login successful");
         setOpenSuccess(true);
         localStorage.setItem("access_token", res?.data?.token);
-        
+        localStorage.setItem("role", res?.data?.role)
+        if(res?.data?.role == "admin"){
+          window.location.href = PATH_DASHBOARD.root;
+        }else if(res?.data?.role == "tennant"){
+          window.location.href = PATH_TENANT.root;
+        }else{
+          window.location.href = PATH_OWNER.root; 
+        }
       } else {
         setOpenFailed(true);
         console.log("Invalid UserName or Password");
