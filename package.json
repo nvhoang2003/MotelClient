@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.15.13",
     "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.15.15",
+    "@mui/x-data-grid": "^7.3.0",
     "@tiptap/extension-image": "^2.3.0",
     "@tiptap/pm": "^2.3.0",
     "@tiptap/react": "^2.3.0",
