@@ -1,7 +1,6 @@
 import { useSnackbar, VariantType, WithSnackbarProps, enqueueSnackbar } from 'notistack'
 import React from 'react'
 
-let useSnackbarRef;
 export const SnackbarUtilsConfigurator = () => {
     useSnackbarRef = useSnackbar()
     return null

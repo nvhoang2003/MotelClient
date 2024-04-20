@@ -12,7 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { PATH_TENANT } from "../../../routes/path";
+import { PATH_AUTH, PATH_TENANT } from "../../../routes/path";
 
 const pages = [
   { key: "Home", path: PATH_TENANT.root },
@@ -29,7 +29,7 @@ function TenantAppBar() {
     setAnchorElNav(event.currentPath);
   };
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentPath);
+    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -39,6 +39,15 @@ function TenantAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleOpenProfile = () => {
+
+  }
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = PATH_AUTH.login;
+  }
 
   return (
     <AppBar position="static">
@@ -146,11 +155,8 @@ function TenantAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={() => handleOpenProfile()}>Profile</MenuItem>
+              <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
             </Menu>
           </Box>
         </Toolbar>

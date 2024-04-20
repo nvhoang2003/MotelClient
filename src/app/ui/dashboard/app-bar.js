@@ -12,7 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { PATH_DASHBOARD } from "../../../routes/path";
+import { PATH_AUTH, PATH_DASHBOARD } from "../../../routes/path";
 
 const pages = [
   { key: "Address", path: PATH_DASHBOARD.address },
@@ -20,7 +20,6 @@ const pages = [
   { key: "Post", path: PATH_DASHBOARD.post },
   { key: "Motel", path: PATH_DASHBOARD.motel },
 ];
-const settings = ["Profile", "Account", "Logout"];
 
 function AdminAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState();
@@ -30,7 +29,7 @@ function AdminAppBar() {
     setAnchorElNav(event.currentPath);
   };
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentPath);
+    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -40,6 +39,15 @@ function AdminAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleOpenProfile = () => {
+
+  }
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = PATH_AUTH.login;
+  }
 
   return (
     <AppBar position="static">
@@ -147,11 +155,8 @@ function AdminAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={() => handleOpenProfile()}>Profile</MenuItem>
+              <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
             </Menu>
           </Box>
         </Toolbar>
