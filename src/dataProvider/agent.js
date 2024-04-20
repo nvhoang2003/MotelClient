@@ -1,8 +1,8 @@
 import axios from "axios";
 import { PATH_AUTH, PATH_HOME } from "../routes/path";
 const instance = axios.create({
-    baseURL: `http://localhost:8080/`,
-    timeout: 60000
+  baseURL: `http://localhost:8080/`,
+  timeout: 60000,
 });
 
 const getLocalStorage = (key) => {
@@ -16,11 +16,13 @@ const getLocalStorage = (key) => {
 };
 
 const clearLocalStorage = () => {
-    localStorage.clear();
+  localStorage.clear();
 };
 
-instance.interceptors.response.use(responseOnSuccessMiddleware, responseOnErrorMiddleware);
-
+instance.interceptors.response.use(
+  responseOnSuccessMiddleware,
+  responseOnErrorMiddleware
+);
 
 function responseOnSuccessMiddleware(res) {
     return res;
@@ -159,6 +161,7 @@ const loginByAdmin = (payload) => {
     return postApi("rest/auth/login", payload);
 };
 
+//Address
 //City
 function getCity() {
     return getApi("api/city");
@@ -176,7 +179,12 @@ const deleteCity = (id) => {
     return deleteApi("api/city/" + id);
 };
 
-export {
+//user
+function getUser() {
+  return getApi("/api/users");
+}
+
+dexport {
     loginByAdmin,
     getCity,
     addCity,
@@ -187,5 +195,6 @@ export {
     updateThePost,
     getMyPost,
     deleteThePost,
-    signUpAccount
+    signUpAccount, 
+    getUser
 };
