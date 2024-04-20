@@ -31,11 +31,10 @@ function responseOnErrorMiddleware(error) {
     if (status === 401) {
         localStorage.clear();
         window.location.href = PATH_AUTH.login;
-        // window.location.href = PATH_HOME.root;
     }
-    // if (status === 403) {
-    //     window.location.href = PATH_HOME.root;
-    // }
+    if (status === 403) {
+        window.location.href = PATH_HOME.root;
+    }
     return error;
 }
 
@@ -152,6 +151,10 @@ const deleteThePost = (id) => {
 }
 
 //Login
+const signUpAccount = (payload, isOWner) => {
+    return postApi("rest/auth/regis/" + isOWner, payload)
+}
+
 const loginByAdmin = (payload) => {
     return postApi("rest/auth/login", payload);
 };
@@ -183,5 +186,6 @@ export {
     getPostByid,
     updateThePost,
     getMyPost,
-    deleteThePost
+    deleteThePost,
+    signUpAccount
 };
