@@ -1,9 +1,9 @@
 import axios from "axios";
-import {PATH_AUTH, PATH_HOME} from "../routes/path";
+import { PATH_AUTH, PATH_HOME } from "../routes/path";
 
 const instance = axios.create({
-    baseURL: `http://localhost:8080/`,
-    timeout: 60000,
+  baseURL: `http://localhost:8080/`,
+  timeout: 60000,
 });
 
 const getLocalStorage = (key) => {
@@ -17,12 +17,12 @@ const getLocalStorage = (key) => {
 };
 
 const clearLocalStorage = () => {
-    localStorage.clear();
+  localStorage.clear();
 };
 
 instance.interceptors.response.use(
-    responseOnSuccessMiddleware,
-    responseOnErrorMiddleware
+  responseOnSuccessMiddleware,
+  responseOnErrorMiddleware
 );
 
 function responseOnSuccessMiddleware(res) {
@@ -30,27 +30,15 @@ function responseOnSuccessMiddleware(res) {
 }
 
 function responseOnErrorMiddleware(error) {
-<<<<<<< HEAD
   var { status } = error.response;
   if (status === 401) {
     localStorage.clear();
     window.location.href = PATH_AUTH.login;
   }
-  // if (status === 403) {
-  //   window.location.href = PATH_HOME.root;
-  // }
+  if (status === 403) {
+    window.location.href = PATH_HOME.root;
+  }
   return error;
-=======
-    var {status} = error.response;
-    if (status === 401) {
-        localStorage.clear();
-        window.location.href = PATH_AUTH.login;
-    }
-    if (status === 403) {
-        window.location.href = PATH_HOME.root;
-    }
-    return error;
->>>>>>> 8c6603bd3c7c3481dc9c030a83d6672eeb5fdb19
 }
 
 // const getApi = async ()
@@ -205,7 +193,6 @@ function updateProfile(id, payload) {
   return putApi("api/users/" + id, payload);
 }
 
-export {
 function addDistrict(payload) {
   return postApi("api/districts", payload);
 }
@@ -219,7 +206,7 @@ function deleteDistrict(id) {
 }
 //user
 function getUser() {
-    return getApi("/api/users");
+  return getApi("/api/users");
 }
 export default {
   loginByAdmin,
