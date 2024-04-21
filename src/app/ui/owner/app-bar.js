@@ -14,6 +14,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { PATH_AUTH, PATH_OWNER } from "../../../routes/path";
 
+
 const pages = [
   { key: "Home", path: PATH_OWNER.root },
   { key: "Your Post", path: PATH_OWNER.post },
@@ -41,13 +42,13 @@ function OwnerAppBar() {
   };
 
   const handleOpenProfile = () => {
-
-  }
+    window.location.href = PATH_OWNER.my_profile;
+  };
 
   const handleLogout = () => {
     localStorage.clear();
     window.location.href = PATH_AUTH.login;
-  }
+  };
 
   return (
     <AppBar position="static">
