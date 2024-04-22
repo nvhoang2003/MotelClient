@@ -44,7 +44,7 @@ export default function page() {
     try {
       // console.log('fetchLesson', res.data.data);
       setlistCity(res.data);
-    } catch (error) {}
+    } catch (error) { }
     console.log("asdasd", listCity);
   }
 
