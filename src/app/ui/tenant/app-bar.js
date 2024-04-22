@@ -41,13 +41,13 @@ function TenantAppBar() {
   };
 
   const handleOpenProfile = () => {
-
-  }
+    window.location.href = PATH_TENANT.my_profile1;
+  };
 
   const handleLogout = () => {
     localStorage.clear();
     window.location.href = PATH_AUTH.login;
-  }
+  };
 
   return (
     <AppBar position="static">
