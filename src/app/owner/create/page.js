@@ -2,8 +2,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
-import { getDistrict } from "../../../dataProvider/agent";
-import { getCity } from "../../../dataProvider/agent";
+import { getCity, getDistrict, getProfile, addCity, postApi } from "../../../dataProvider/agent";
 
 
 export default function CreateMotelRoom() {
@@ -14,6 +13,7 @@ export default function CreateMotelRoom() {
     const [motelRoom, setMotelRoom] = useState({
         acreage: '', amount: '', description: '', status: '', district: { id: null }
     });
+
     const fetchData = async () => {
         const res = await getCity();
         let listCity = res.data;
@@ -82,9 +82,26 @@ export default function CreateMotelRoom() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        console.log('Submitting', motelRoom);
+        let userProfileRes = await getProfile();
+        let user = userProfileRes.data;
+        let submitData = {
+            ...motelRoom,
+            createdBy: user
+        }
+        console.log(JSON.stringify(submitData));
+        // Submit Data
+        const res = await postApi('api/motels', submitData);
+        console.log(res);
+        if (res.status < 400) {
+            console.log("Save successful");
+        } else {
+            console.log("Save failed");
+        }
     };
+
+    function getMotelRoom() {
+        return motelRoom;
+    }
 
     return (<div className='p-3'>
         <div className='container'>

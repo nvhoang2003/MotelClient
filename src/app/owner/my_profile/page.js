@@ -26,7 +26,7 @@ export default function My_Profile() {
       const res = await getProfile();
       // console.log(res);
       setProfile(res.data);
-    } catch (error) {}
+    } catch (error) { }
   }
   const handleChange = (event) => {
     setProfile({ ...Profile, gender: event.target.value });
@@ -50,14 +50,6 @@ export default function My_Profile() {
     setProfile({ ...Profile, [e.target.name]: e.target.value });
 
   const handleSubmit = async () => {
-    // const addForm = {
-    //   userName: userName,
-    //   firstName: firstName,
-    //   lastName: lastName,
-    //   phone: phone,
-    //   gender: gender,
-    // };
-
     try {
       var res = await updateProfile(Profile.id, Profile);
       console.log(res);

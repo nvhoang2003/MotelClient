@@ -208,7 +208,7 @@ function deleteDistrict(id) {
 function getUser() {
     return getApi("/api/users");
 }
-export default {
+export {
     loginByAdmin,
     getCity,
     addCity,
@@ -227,4 +227,8 @@ export default {
     getUser,
     getProfile,
     updateProfile,
+    getApi,
+    postApi,
+    putApi,
+    deleteApi,
 };
