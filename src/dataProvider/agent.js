@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PATH_AUTH, PATH_HOME } from "../routes/path";
+import {PATH_AUTH, PATH_HOME} from "../routes/path";
 
 const instance = axios.create({
     baseURL: `http://localhost:8080/`,
@@ -30,14 +30,14 @@ function responseOnSuccessMiddleware(res) {
 }
 
 function responseOnErrorMiddleware(error) {
-    var { status } = error.response;
+    var {status} = error.response;
     if (status === 401) {
         localStorage.clear();
         window.location.href = PATH_AUTH.login;
     }
-    if (status === 403) {
-        window.location.href = PATH_HOME.root;
-    }
+    // if (status === 403) {
+    //     window.location.href = PATH_HOME.root;
+    // }
     return error;
 }
 
@@ -204,10 +204,12 @@ function editDistrict(id, payload) {
 function deleteDistrict(id) {
     return deleteApi("api/districts/" + id);
 }
+
 //user
 function getUser() {
     return getApi("/api/users");
 }
+
 export {
     loginByAdmin,
     getCity,
