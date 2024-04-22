@@ -159,9 +159,9 @@ const signUpAccount = (payload, isOWner) => {
   return postApi("rest/auth/regis/" + isOWner, payload);
 };
 
-const loginByAdmin = (payload) => {
+function loginByAdmin(payload) {
   return postApi("rest/auth/login", payload);
-};
+}
 
 //Address
 //City
@@ -208,7 +208,7 @@ function deleteDistrict(id) {
 function getUser() {
   return getApi("/api/users");
 }
-export default {
+export {
   loginByAdmin,
   getCity,
   addCity,
