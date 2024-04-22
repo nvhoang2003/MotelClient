@@ -8,6 +8,8 @@ const ROOTS_OWNER = "/owner";
 const ROOTS_TENANT = "/tenant";
 const HOME_PAGE = "/home";
 const PROFILE = "/owner/my_profile";
+const PROFILE1 = "/tenant/my_profile";
+const PROFILE2 = "/dashboard/my_profile";
 
 export const PATH_AUTH = {
   root: ROOTS_AUTH,
@@ -22,12 +24,15 @@ export const PATH_HOME = {
 export const PATH_OWNER = {
   root: ROOTS_OWNER,
   my_profile: PROFILE,
+  my_profile: PROFILE,
 };
 
 export const PATH_TENANT = {
   root: ROOTS_TENANT,
+  my_profile1: PROFILE1,
 };
 
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
+  my_profile2: PROFILE2,
 };

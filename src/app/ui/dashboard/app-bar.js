@@ -41,13 +41,13 @@ function AdminAppBar() {
   };
 
   const handleOpenProfile = () => {
-
-  }
+    window.location.href = PATH_DASHBOARD.my_profile2;
+  };
 
   const handleLogout = () => {
     localStorage.clear();
     window.location.href = PATH_AUTH.login;
-  }
+  };
 
   return (
     <AppBar position="static">
