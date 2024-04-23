@@ -1,8 +1,9 @@
 import axios from "axios";
 import { PATH_AUTH, PATH_HOME } from "../routes/path";
+
 const instance = axios.create({
     baseURL: `http://localhost:8080/`,
-    timeout: 60000
+    timeout: 60000,
 });
 
 const getLocalStorage = (key) => {
@@ -19,8 +20,10 @@ const clearLocalStorage = () => {
     localStorage.clear();
 };
 
-instance.interceptors.response.use(responseOnSuccessMiddleware, responseOnErrorMiddleware);
-
+instance.interceptors.response.use(
+    responseOnSuccessMiddleware,
+    responseOnErrorMiddleware
+);
 
 function responseOnSuccessMiddleware(res) {
     return res;
@@ -32,9 +35,9 @@ function responseOnErrorMiddleware(error) {
         localStorage.clear();
         window.location.href = PATH_AUTH.login;
     }
-    if (status === 403) {
-        window.location.href = PATH_HOME.root;
-    }
+    // if (status === 403) {
+    //     window.location.href = PATH_HOME.root;
+    // }
     return error;
 }
 
@@ -129,6 +132,7 @@ async function getApiV2(url) {
         return err;
     }
 }
+
 //Post
 const getMyPost = () => {
     return getApi('api/myposts');
@@ -161,9 +165,10 @@ const loginByAdmin = (payload) => {
 
 //motel
 const getMotelById = (id) => {
-    return getApi(`api/post/${id}`);
+    return getApi(`api/motels/${id}`);
 }
 
+//Address
 //City
 function getCity() {
     return getApi("api/city");
@@ -181,17 +186,42 @@ const deleteCity = (id) => {
     return deleteApi("api/city/" + id);
 };
 
+function getDistrict(id) {
+    return getApi("api/districts/getList/" + id);
+}
+
+function addDistrict(payload) {
+    return postApi("api/districts", payload);
+}
+
+function editDistrict(id, payload) {
+    return putApi("api/districts/" + id, payload);
+}
+
+function deleteDistrict(id) {
+    return deleteApi("api/districts/" + id);
+}
+//user
+function getUser() {
+    return getApi("/api/users");
+}
+
 export {
     loginByAdmin,
+    getMotelById,
     getCity,
     addCity,
     editCity,
     deleteCity,
+    getDistrict,
+    addDistrict,
+    editDistrict,
+    deleteDistrict,
     createThePost,
     getPostByid,
     updateThePost,
     getMyPost,
     deleteThePost,
     signUpAccount,
-    getMotelById
+    getUser
 };

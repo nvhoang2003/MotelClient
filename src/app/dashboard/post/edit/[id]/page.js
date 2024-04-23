@@ -82,7 +82,6 @@ export default function page({ params }) {
         }
     }
 
-
     useEffect(() => {
         if (params.id) {
             fetchPost()
