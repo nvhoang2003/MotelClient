@@ -1,31 +1,38 @@
-function path(root, sublink){
-    return `${root}${sublink}`;
+function path(root, sublink) {
+  return `${root}${sublink}`;
 }
 
-const ROOTS_AUTH = '/auth';
-const ROOTS_DASHBOARD = '/dashboard';
-const ROOTS_OWNER = '/owner'
-const ROOTS_TENANT = '/tenant'
-const HOME_PAGE = '/home';
+const ROOTS_AUTH = "/auth";
+const ROOTS_DASHBOARD = "/dashboard";
+const ROOTS_OWNER = "/owner";
+const ROOTS_TENANT = "/tenant";
+const HOME_PAGE = "/home";
+const PROFILE = "/owner/my_profile";
+const PROFILE1 = "/tenant/my_profile";
+const PROFILE2 = "/dashboard/my_profile";
 
 export const PATH_AUTH = {
-    root: ROOTS_AUTH,
-    login: path(ROOTS_AUTH, '/login'),
-    signup: path('/signup')
-}
+  root: ROOTS_AUTH,
+  login: path(ROOTS_AUTH, "/login"),
+  signup: path("/signup"),
+};
 
 export const PATH_HOME = {
-    root: HOME_PAGE
-}
+  root: HOME_PAGE,
+};
 
 export const PATH_OWNER = {
-    root: ROOTS_OWNER
-}
+  root: ROOTS_OWNER,
+  my_profile: PROFILE,
+  my_profile: PROFILE,
+};
 
 export const PATH_TENANT = {
-    root: ROOTS_TENANT
-}
+  root: ROOTS_TENANT,
+  my_profile1: PROFILE1,
+};
 
- export const PATH_DASHBOARD = {
-    root: ROOTS_DASHBOARD,
- }
+export const PATH_DASHBOARD = {
+  root: ROOTS_DASHBOARD,
+  my_profile2: PROFILE2,
+};
