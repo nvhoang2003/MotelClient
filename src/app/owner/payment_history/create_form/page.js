@@ -1,11 +1,44 @@
 "use client"
 import 'bootstrap/dist/css/bootstrap.css';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {getApi, getProfile, postApi} from "../../../../dataProvider/agent";
 
 export default function PaymentHistoryForm() {
+    const [motels, setMotels] = useState([])
+    const [tenants, setTenants] = useState([])
+    const [tenantsDefault, setTenantsDefault] = useState([])
     const [formData, setFormData] = useState({
-        electricMoney: '', name: '', paymentMethod: '', waterMoney: '', wifiMoney: '', state: ''
+        name: '',
+        paymentMethod: '',
+        state: '',
+        electricMoney: '',
+        waterMoney: '',
+        wifiMoney: '',
+        createdBy: {id: null},
+        motel: {id: null},
     });
+
+    useEffect(() => {
+        getProfile().then(res => {
+            let user = res.data
+            console.log(user)
+            setFormData(prevState => ({
+                ...prevState, createdBy: user
+            }))
+            getApi("api/motels").then(res => {
+                let motelData = res.data
+                setMotels(motelData.filter(motel => motel.createdBy.id === user.id))
+                setFormData(prevState => ({
+                    ...prevState, motel: motelData[0]
+                }))
+            })
+            getApi('api/tenants').then(res => {
+                let tenantsData = res.data
+                setTenantsDefault(tenantsData)
+                setTenants(tenantsData)
+            })
+        })
+    }, []);
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -16,8 +49,18 @@ export default function PaymentHistoryForm() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Here you would typically handle the submission to your API or backend
         console.log('Form Data Submitted:', formData);
+        postApi("api/paymentHistories", formData).then(res => {
+            console.log(res.data)
+        })
+    };
+    const handleMotelChange = (event) => {
+        event.preventDefault();
+        let motel_id = Number(event.target.value)
+        let motelsFilter = motels.filter(motel => motel.id === motel_id)
+        setFormData(prevState => ({
+            ...prevState, motel: motelsFilter[0]
+        }));
     };
 
     return (<div className="container my-5">
@@ -28,17 +71,6 @@ export default function PaymentHistoryForm() {
             <div className="card-body">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label htmlFor="electricMoney" className="form-label">Electric Money</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="electricMoney"
-                            name="electricMoney"
-                            value={formData.electricMoney}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="mb-3">
                         <label htmlFor="name" className="form-label">Name</label>
                         <input
                             type="text"
@@ -47,6 +79,7 @@ export default function PaymentHistoryForm() {
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -58,6 +91,19 @@ export default function PaymentHistoryForm() {
                             name="paymentMethod"
                             value={formData.paymentMethod}
                             onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="electricMoney" className="form-label">Electric Money</label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            id="electricMoney"
+                            name="electricMoney"
+                            value={formData.electricMoney}
+                            onChange={handleChange} ư
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -70,6 +116,7 @@ export default function PaymentHistoryForm() {
                             name="waterMoney"
                             value={formData.waterMoney}
                             onChange={handleChange}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -82,6 +129,7 @@ export default function PaymentHistoryForm() {
                             name="wifiMoney"
                             value={formData.wifiMoney}
                             onChange={handleChange}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -93,15 +141,15 @@ export default function PaymentHistoryForm() {
                             name="state"
                             value={formData.state}
                             onChange={handleChange}
+                            required
                         />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="tenant" className="form-label">Payment Ant</label>
-                        <select id='tenant' className='form-select'>
-                            <option>Nguyen Van Anh</option>
-                            <option>Nguyen Van Qua</option>
-                            <option>Tenant C</option>
-                            <option>Tenant D</option>
+                        <label htmlFor="motel" className="form-label">Motel</label>
+                        <select id='motel' className='form-select' onChange={handleMotelChange} required>
+                            {motels.map((item, index) => {
+                                return (<option key={index} value={item.id}>{item.description}</option>)
+                            })}
                         </select>
                     </div>
                     <div className="d-flex justify-content-end">
