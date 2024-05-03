@@ -91,17 +91,15 @@ export default function page({ params }) {
     return (
         <div>
             <>
-                <SnackbarProvider>
-                    <Box>
-                        <ReactQuill
-                            value={value}
-                            onChange={setValue}
-                            modules={quillModules}
-                            formats={quillFormats}
-                        />
-                        <Button variant='contained' onClick={() => handleSave()} sx={{ my: 3 }}>Save</Button>
-                    </Box>
-                </SnackbarProvider>
+                <Box>
+                    <ReactQuill
+                        value={value}
+                        onChange={setValue}
+                        modules={quillModules}
+                        formats={quillFormats}
+                    />
+                    <Button variant='contained' onClick={() => handleSave()} sx={{ my: 3 }}>Save</Button>
+                </Box>
             </>
         </div>
     )

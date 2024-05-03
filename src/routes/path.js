@@ -35,4 +35,7 @@ export const PATH_TENANT = {
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   my_profile2: PROFILE2,
+  address: "/dashboard/system/address",
+  user: "/dashboard/user",
+  post: "/dashboard/post"
 };

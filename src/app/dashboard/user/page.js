@@ -74,8 +74,8 @@ export default function PageSizeCustomOptions() {
   ];
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <Typography>List Users</Typography>
+    <div style={{ height: 400, width: "100%", mt: 3 }}>
+      <Typography variant="h3" sx={{alignSelf: 'center'}}>List Users</Typography>
       <DataGrid
         rows={user}
         columns={columns}
