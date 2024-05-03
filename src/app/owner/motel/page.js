@@ -1,10 +1,14 @@
 "use client"
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {deleteApi, getApi, getProfile} from "../../../dataProvider/agent";
+import { deleteApi, getApi, getProfile } from "../../../dataProvider/agent";
+import { Box, Button } from '@mui/material';
+import { useRouter } from 'next/navigation';
 
 export default function ListOwnerMotel() {
     let [listMotel, setListMotel] = useState([]);
+    const router = useRouter();
+
     let pageReload = 0;
 
     // Effect của site
@@ -42,20 +46,23 @@ export default function ListOwnerMotel() {
     }
 
     return (<>
-        <h1>List Motel</h1>
+        <h1>Danh Sách Phòng Trọ</h1>
+        <Box sx={{ display: "flex", justifyContent: 'end' }}>
+            <Button variant='contained' onClick={() => router.push(`motel/create`)} >Tạo Mới</Button>
+        </Box>
         <table className="table">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Amount</th>
-                <th>Acreage</th>
-                <th>Description</th>
-                <th></th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Giá Phòng</th>
+                    <th>Diện Tích</th>
+                    <th>Mô Tả</th>
+                    <th></th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-            {renderListMotel(listMotel)}
+                {renderListMotel(listMotel)}
             </tbody>
         </table>
     </>)

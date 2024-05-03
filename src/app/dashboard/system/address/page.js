@@ -24,6 +24,7 @@ import {
   editDistrict,
   deleteDistrict,
 } from "../../../../dataProvider/agent";
+import snackbarUtil from "../../../../utility/snackbarUtil";
 
 export default function page() {
   const [currentCity, setCurrentCity] = useState("");
@@ -90,58 +91,67 @@ export default function page() {
   };
 
   const handleSubmit = async () => {
-    const addForm = {
-      name: cityName,
-    };
+    if (cityName?.length > 0) {
+      const addForm = {
+        name: cityName,
+      };
 
-    try {
-      const res =
-        openedit == true
-          ? await editCity(addForm, currentCity)
-          : await addCity(addForm);
-      console.log(res);
+      try {
+        const res =
+          openedit == true
+            ? await editCity(addForm, currentCity)
+            : await addCity(addForm);
+        console.log(res);
 
-      if (res.status < 400) {
-        console.log("Save successful");
-        fetchCity();
-        setOpenAdd(false);
-        setOpenEdit(false);
-      } else {
-        console.log("Save failed");
+        if (res.status < 400) {
+          snackbarUtil.success("Save successful");
+          fetchCity();
+          setOpenAdd(false);
+          setOpenEdit(false);
+        } else {
+          snackbarUtil.error("Save failed");
+        }
+      } catch (error) {
+        snackbarUtil.error(error);
       }
-    } catch (error) {
-      console.error("", error);
+    } else {
+      snackbarUtil.error("You must enter city name")
     }
+
   };
 
   const handleSubmitDistrict = async () => {
-    const addFormDistrict = {
-      city_id: currentCity,
-      name: districtName,
-    };
+    if (districtName.length > 0) {
+      const addFormDistrict = {
+        city_id: currentCity,
+        name: districtName,
+      };
 
-    const editFormDistrict = {
-      name: districtName,
-    };
+      const editFormDistrict = {
+        name: districtName,
+      };
 
-    console.log(addFormDistrict);
-    try {
-      const res =
-        opendistrictedit == true
-          ? await editDistrict(currentDistrict, editFormDistrict)
-          : await addDistrict(addFormDistrict);
-      console.log(res);
+      console.log(addFormDistrict);
+      try {
+        const res =
+          opendistrictedit == true
+            ? await editDistrict(currentDistrict, editFormDistrict)
+            : await addDistrict(addFormDistrict);
+        console.log(res);
 
-      if (res.status < 400) {
-        console.log("Save successful");
-        fetchDistrict();
-        setOpenAddDistrict(false);
-        setOpenEditDistrict(false);
-      } else {
-        console.log("Save failed");
+        if (res.status < 400) {
+          console.log("Save successful");
+          fetchDistrict();
+          setOpenAddDistrict(false);
+          setOpenEditDistrict(false);
+        } else {
+          console.log("Save failed");
+        }
+      } catch (error) {
+        console.error("", error);
       }
-    } catch (error) {
-      console.error("", error);
+    }else{
+      snackbarUtil.error("You must enter district name")
     }
   };
 
@@ -194,6 +204,7 @@ export default function page() {
       setcityName(currentCityName?.name);
       setOpenDeleteDistrict(true);
     } else {
+      snackbarUtil.warning("You need choose the city")
     }
   };
 
@@ -215,6 +226,7 @@ export default function page() {
       setcityName(currentCityName?.name);
       setOpenEdit(true);
     } else {
+      snackbarUtil.warning("You need choose the city")
     }
   };
 
@@ -228,6 +240,7 @@ export default function page() {
       setcityName(currentCityName?.name);
       setOpenAddDistrict(true);
     } else {
+      snackbarUtil.warning("You need choose the city")
     }
   };
 
@@ -236,7 +249,7 @@ export default function page() {
   };
 
   const handleClickOpenEditDistrict = () => {
-    if (currentCity) {
+    if (currentCity && currentDistrict) {
       const currentCityName = listCity.find((c) => c.id === currentCity);
       const currentDistrictName = listDistrict.find(
         (d) => d.id === currentDistrict
@@ -244,7 +257,10 @@ export default function page() {
       setcityName(currentCityName?.name);
       setDistrictName(currentDistrictName?.name);
       setOpenEditDistrict(true);
+    } else if (!currentCity) {
+      snackbarUtil.warning("You need choose the city")
     } else {
+      snackbarUtil.warning("You need choose the district")
     }
   };
 
@@ -253,7 +269,7 @@ export default function page() {
   };
 
   const handleClickOpenDeleteDistrict = () => {
-    if (currentCity) {
+    if (currentCity && currentDistrict) {
       const currentCityName = listCity.find((c) => c.id === currentCity);
       const currentDistrictName = listDistrict.find(
         (d) => d.id === currentDistrict
@@ -261,7 +277,10 @@ export default function page() {
       setcityName(currentCityName?.name);
       setDistrictName(currentDistrictName?.name);
       setOpenDeleteDistrict(true);
+    } else if (!currentCity) {
+      snackbarUtil.warning("You need choose the city")
     } else {
+      snackbarUtil.warning("You need choose the district")
     }
   };
 
@@ -270,7 +289,7 @@ export default function page() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", mt: 3 }}>
       {/* Add */}
       <React.Fragment>
         <Dialog open={openadd} onClose={handleCloseAdd}>
@@ -472,7 +491,7 @@ export default function page() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClickOpenDeleteDistrict}>Cancel</Button>
+            <Button onClick={handleCloseDeleteDistrict}>Cancel</Button>
             <Button type="submit" onClick={handleDeleteFormDistrict}>
               Ok
             </Button>

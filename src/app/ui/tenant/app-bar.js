@@ -16,7 +16,6 @@ import { PATH_AUTH, PATH_TENANT } from "../../../routes/path";
 
 const pages = [
   { key: "Home", path: PATH_TENANT.root },
-  { key: "Your Comments", path: PATH_TENANT.comments },
   { key: "Your Motel", path: PATH_TENANT.motel },
 ];
 const settings = ["Profile", "Account", "Logout"];

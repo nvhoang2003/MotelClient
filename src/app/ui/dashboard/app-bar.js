@@ -18,7 +18,6 @@ const pages = [
   { key: "Address", path: PATH_DASHBOARD.address },
   { key: "User", path: PATH_DASHBOARD.user },
   { key: "Post", path: PATH_DASHBOARD.post },
-  { key: "Motel", path: PATH_DASHBOARD.motel },
 ];
 
 function AdminAppBar() {

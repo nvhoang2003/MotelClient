@@ -31,10 +31,10 @@ function responseOnSuccessMiddleware(res) {
 
 function responseOnErrorMiddleware(error) {
   var { status } = error.response;
-  if (status === 401) {
-    localStorage.clear();
-    window.location.href = PATH_AUTH.login;
-  }
+  // if (status === 401) {
+  //   localStorage.clear();
+  //   window.location.href = PATH_AUTH.login;
+  // }
   // if (status === 403) {
   //     window.location.href = PATH_HOME.root;
   // }
@@ -135,7 +135,11 @@ async function getApiV2(url) {
 
 //Post
 const getMyPost = () => {
-  return getApi("api/myposts");
+  return getApi("api/posts/myposts");
+};
+
+const getAllPost = () => {
+  return getApi("api/posts");
 };
 
 const createThePost = (payload) => {
@@ -242,5 +246,6 @@ export {
   postApi,
   putApi,
   deleteApi,
-  getTenantMotel
+  getTenantMotel,
+  getAllPost
 };
