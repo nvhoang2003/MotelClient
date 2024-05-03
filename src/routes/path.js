@@ -24,12 +24,14 @@ export const PATH_HOME = {
 export const PATH_OWNER = {
   root: ROOTS_OWNER,
   my_profile: PROFILE,
-  my_profile: PROFILE,
+  post: "/owner/post",
+  motel: "/owner/motel"
 };
 
 export const PATH_TENANT = {
   root: ROOTS_TENANT,
   my_profile1: PROFILE1,
+  motel: "/tenant/motel"
 };
 
 export const PATH_DASHBOARD = {

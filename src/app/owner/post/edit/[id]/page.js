@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 import 'react-quill/dist/quill.snow.css';
 import { Button, Box, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from '@mui/material';
-import { getPostByid, updateThePost,getCity, getDistrict } from '../../../../../dataProvider/agent';
+import { getPostByid, updateThePost, getCity, getDistrict } from '../../../../../dataProvider/agent';
 import snackbarUtil from '../../../../../utility/snackbarUtil';
 import { SnackbarProvider } from 'notistack';
 
@@ -110,26 +110,30 @@ export default function page({ params }) {
 
     const handleSave = async () => {
         console.log(value)
-        var data = {
-            title: title,
-            content: value,
-            district: listDistrict.find((item) => item.id == currentDistrict)
-        }
-
-        try {
-            var res = await updateThePost(params.id, data);
-            console.log(res)
-            if (res.status < 400) {
-                snackbarUtil.success("Update successfuly");
-                // setOpenSuccess(true)
-                // localStorage.setItem("access_token", res?.data?.token);
-            } else {
-                // setOpenFailed(true)
-                snackbarUtil.error("Update Failed");
-                // enqueueSnackbar("Invalid UserName or Password");
+        if (value?.length > 0) {
+            var data = {
+                title: title,
+                content: value,
+                district: listDistrict.find((item) => item.id == currentDistrict)
             }
-        } catch (error) {
-            console.log(error)
+
+            try {
+                var res = await updateThePost(params.id, data);
+                console.log(res)
+                if (res.status < 400) {
+                    snackbarUtil.success("Update successfuly");
+                    // setOpenSuccess(true)
+                    // localStorage.setItem("access_token", res?.data?.token);
+                } else {
+                    // setOpenFailed(true)
+                    snackbarUtil.error("Update Failed");
+                    // enqueueSnackbar("Invalid UserName or Password");
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            snackbarUtil.error("You Must Enter The Conent of Post")
         }
     }
 
@@ -142,67 +146,65 @@ export default function page({ params }) {
 
     return (
         <div>
-            <Box sx={{mt: 3}}>
-                <SnackbarProvider>
-                    <TextField
-                        value={title}
-                        label='Title'
-                        onChange={(e) => setTitle(e.target.value)}
-                        sx={{ width: "100%", mb: 1 }}
+            <Box sx={{ mt: 3 }}>
+                <TextField
+                    value={title}
+                    label='Title'
+                    onChange={(e) => setTitle(e.target.value)}
+                    sx={{ width: "100%", mb: 1 }}
+                />
+                <Stack sx={{ width: '100%', mb: 1 }} direction='row' spacing={2}>
+                    <FormControl sx={{ width: "50%" }}>
+                        <InputLabel id="city">City</InputLabel>
+                        <Select
+                            labelId="city"
+                            id="city"
+                            value={currentCity}
+                            label="city"
+                            onChange={handleChange}
+                        >
+                            {listCity.map((city, index) => {
+                                return (
+                                    <MenuItem key={index} value={city.id}>
+                                        {city.name}
+                                    </MenuItem>
+                                );
+                            })}
+                            {/* <MenuItem value={"Ha Noi"}>Hà Nội</MenuItem>
+          <MenuItem value={"Ho Chi Minh"}>Hồ Chí Minh</MenuItem>
+          <MenuItem value={"Da Nang"}>Đà Nẵng</MenuItem> */}
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{ width: "50%" }}>
+                        <InputLabel id="districts">District</InputLabel>
+                        <Select
+                            id="districts"
+                            value={currentDistrict}
+                            label="districts"
+                            onChange={cityChange}
+                        >
+                            {listDistrict?.map((district, index) => {
+                                return (
+                                    <MenuItem key={index} value={district.id}>
+                                        {district.name}
+                                    </MenuItem>
+                                );
+                            })}
+                            {/* <MenuItem value={"Ha Noi"}>Hà Nội</MenuItem>
+          <MenuItem value={"Ho Chi Minh"}>Hồ Chí Minh</MenuItem>
+          <MenuItem value={"Da Nang"}>Đà Nẵng</MenuItem> */}
+                        </Select>
+                    </FormControl>
+                </Stack>
+                <Box>
+                    <ReactQuill
+                        value={value}
+                        onChange={setValue}
+                        modules={quillModules}
+                        formats={quillFormats}
                     />
-                    <Stack sx={{ width: '100%', mb: 1 }} direction='row' spacing={2}>
-                        <FormControl sx={{ width: "50%" }}>
-                            <InputLabel id="city">City</InputLabel>
-                            <Select
-                                labelId="city"
-                                id="city"
-                                value={currentCity}
-                                label="city"
-                                onChange={handleChange}
-                            >
-                                {listCity.map((city, index) => {
-                                    return (
-                                        <MenuItem key={index} value={city.id}>
-                                            {city.name}
-                                        </MenuItem>
-                                    );
-                                })}
-                                {/* <MenuItem value={"Ha Noi"}>Hà Nội</MenuItem>
-          <MenuItem value={"Ho Chi Minh"}>Hồ Chí Minh</MenuItem>
-          <MenuItem value={"Da Nang"}>Đà Nẵng</MenuItem> */}
-                            </Select>
-                        </FormControl>
-                        <FormControl sx={{ width: "50%" }}>
-                            <InputLabel id="districts">District</InputLabel>
-                            <Select
-                                id="districts"
-                                value={currentDistrict}
-                                label="districts"
-                                onChange={cityChange}
-                            >
-                                {listDistrict?.map((district, index) => {
-                                    return (
-                                        <MenuItem key={index} value={district.id}>
-                                            {district.name}
-                                        </MenuItem>
-                                    );
-                                })}
-                                {/* <MenuItem value={"Ha Noi"}>Hà Nội</MenuItem>
-          <MenuItem value={"Ho Chi Minh"}>Hồ Chí Minh</MenuItem>
-          <MenuItem value={"Da Nang"}>Đà Nẵng</MenuItem> */}
-                            </Select>
-                        </FormControl>
-                    </Stack>
-                    <Box>
-                        <ReactQuill
-                            value={value}
-                            onChange={setValue}
-                            modules={quillModules}
-                            formats={quillFormats}
-                        />
-                        <Button variant='contained' onClick={() => handleSave()} sx={{ my: 3 }}>Save</Button>
-                    </Box>
-                </SnackbarProvider>
+                    <Button variant='contained' onClick={() => handleSave()} sx={{ my: 3 }}>Save</Button>
+                </Box>
             </Box>
         </div>
     )

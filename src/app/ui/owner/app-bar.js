@@ -17,9 +17,8 @@ import { PATH_AUTH, PATH_OWNER } from "../../../routes/path";
 
 const pages = [
   { key: "Home", path: PATH_OWNER.root },
-  { key: "Your Post", path: PATH_OWNER.post },
-  { key: "Your Motels", path: PATH_OWNER.motel },
-  { key: "Your Tenants", path: PATH_OWNER.tenant },
+  { key: "Bài Post", path: PATH_OWNER.post },
+  { key: "Phòng Trọ", path: PATH_OWNER.motel },
 ];
 
 function OwnerAppBar() {

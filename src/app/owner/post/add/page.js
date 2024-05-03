@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 import 'react-quill/dist/quill.snow.css';
 import { Button, Box, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from '@mui/material';
 import { createThePost, getCity, getDistrict } from '../../../../dataProvider/agent';
+import snackbarUtil from '../../../../utility/snackbarUtil';
 
 page.getLayout = (page) => <RootLayout>{page}</RootLayout>;
 
@@ -93,20 +94,24 @@ export default function page() {
   ];
 
   const handleSave = async () => {
-    console.log(value);
-    var data = {
-      title: title,
-      content: value,
-      district: listDistrict.find((item) => item.id == currentDistrict)
-    };
-    try {
-      var res = await createThePost(data);
-      if (res.status < 400) {
-        console.log("Login successful");
-      } else {
+    if (value?.length > 0) {
+      console.log(value);
+      var data = {
+        title: title,
+        content: value,
+        district: listDistrict.find((item) => item.id == currentDistrict)
+      };
+      try {
+        var res = await createThePost(data);
+        if (res.status < 400) {
+          console.log("Login successful");
+        } else {
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    }else{
+      snackbarUtil.error("You must Enter the content Of Post")
     }
   };
 
@@ -119,7 +124,7 @@ export default function page() {
           onChange={(e) => setTitle(e.target.value)}
           sx={{ width: "100%", mb: 1 }}
         />
-        <Stack sx={{ width: '100%', mb:1 }} direction='row' spacing={2}>
+        <Stack sx={{ width: '100%', mb: 1 }} direction='row' spacing={2}>
           <FormControl sx={{ width: "50%" }}>
             <InputLabel id="city">City</InputLabel>
             <Select

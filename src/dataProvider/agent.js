@@ -31,13 +31,13 @@ function responseOnSuccessMiddleware(res) {
 
 function responseOnErrorMiddleware(error) {
   var { status } = error.response;
-  if (status === 401) {
-    localStorage.clear();
-    window.location.href = PATH_AUTH.login;
-  }
-  if (status === 403) {
-      window.location.href = PATH_HOME.root;
-  }
+  // if (status === 401) {
+  //   localStorage.clear();
+  //   window.location.href = PATH_AUTH.login;
+  // }
+  // if (status === 403) {
+  //     window.location.href = PATH_HOME.root;
+  // }
   return error;
 }
 

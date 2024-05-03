@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import 'bootstrap/dist/css/bootstrap.css';
 import { getApi, getProfile, postApi, putApi} from '../../../../../dataProvider/agent';
 import { router } from "next/client";
+import snackbarUtil from '../../../../../utility/snackbarUtil';
 export default function EditMotel({ params }) {
     const router = useRouter();
     const { id } = params;
@@ -36,11 +37,11 @@ export default function EditMotel({ params }) {
         const res = await putApi(`api/motels/${id}`, submitData);
         console.log(res)
         if (res.status < 400) {
-            console.log("Save successful");
+            snackbarUtil.success("Lưu Thành Công");
+            await router.push('/owner/motel')
         } else {
-            console.log("Save failed");
+            snackbarUtil.error(res?.response?.data);
         }
-        await router.push('/owner/motel')
     };
     return (<div className='container'>
         <h1>Edit Motel</h1>

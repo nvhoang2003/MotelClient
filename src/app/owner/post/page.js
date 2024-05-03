@@ -18,8 +18,8 @@ export default function page() {
     const [listPost, setListPost] = useState([]);
     const router = useRouter();
 
-    const handleDelete = async(item) => {
-        try{
+    const handleDelete = async (item) => {
+        try {
             const res = await deleteThePost(item.id)
             if (res.status < 400) {
                 fetchMyPosts()
@@ -27,7 +27,7 @@ export default function page() {
             } else {
                 snackbarUtil.error("Delete Failed");
             }
-        }catch (error) {
+        } catch (error) {
             snackbarUtil.error(error)
         }
     }
@@ -51,24 +51,25 @@ export default function page() {
     }, [])
 
     return (
-        <SnackbarProvider>
-            <div>
-                {listPost.map((item, index) => {
-                    console.log(item)
-                    return (
-                        <Box key={index} sx={{ mt: 3 }}>
-                            <ReactQuill
-                                value={item?.content}
-                                readOnly
-                            />
-                            <Stack direction='row' spacing={3} sx={{mt: 1, width: '100%', justifyContent: 'flex-end'}}>
-                                <Button variant='contained' onClick={() => router.push(`post/edit/${item.id}`)}>Update</Button>
-                                <Button variant='contained' onClick={() => handleDelete(item)} sx={{backgroundColor: 'red'}}>Delete</Button>
-                            </Stack>
-                        </Box>
-                    )
-                })}
-            </div>
-        </SnackbarProvider>
+        <Box sx={{ mt: 3 }}>
+            <Box sx={{display: "flex", justifyContent: 'end'}}>
+                <Button variant='contained' onClick={() => router.push(`post/add`)} >Create</Button>
+            </Box>
+            {listPost.map((item, index) => {
+                console.log(item)
+                return (
+                    <Box key={index} sx={{ mt: 3 }}>
+                        <ReactQuill
+                            value={item?.content}
+                            readOnly
+                        />
+                        <Stack direction='row' spacing={3} sx={{ mt: 1, width: '100%', justifyContent: 'flex-end' }}>
+                            <Button variant='contained' onClick={() => router.push(`post/edit/${item.id}`)}>Update</Button>
+                            <Button variant='contained' onClick={() => handleDelete(item)} sx={{ backgroundColor: 'red' }}>Delete</Button>
+                        </Stack>
+                    </Box>
+                )
+            })}
+        </Box>
     )
 }

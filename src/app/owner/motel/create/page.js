@@ -4,6 +4,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import {getCity, getDistrict, getProfile, addCity, postApi} from "../../../../dataProvider/agent";
 import {redirect, useRouter} from "next/navigation";
+import snackbarUtil from '../../../../utility/snackbarUtil';
 
 
 export default function CreateMotelRoom() {
@@ -90,12 +91,11 @@ export default function CreateMotelRoom() {
         const res = await postApi('api/motels', submitData);
         console.log(res);
         if (res.status < 400) {
-            console.log("Save successful");
-
+            snackbarUtil.success("Lưu Thành Công");
+            router.push('/owner/motel')
         } else {
-            console.log("Save failed");
+            snackbarUtil.error(res?.response?.data);
         }
-        router.push('/owner/motel')
     };
 
     return (<div className='p-3'>
