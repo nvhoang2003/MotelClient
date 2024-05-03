@@ -12,7 +12,7 @@ export default function CreateMotelRoom() {
     const [listDistrict, setListDistrict] = useState([]);
     const [district, setDistrict] = useState({});
     const [motelRoom, setMotelRoom] = useState({
-        acreage: '', amount: '', description: '', status: '', district: {id: null}
+        acreage: '', amount: '', description: '', emailTenant: '', district: {id: null}
     });
     const router = useRouter();
 
@@ -149,30 +149,15 @@ export default function CreateMotelRoom() {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="status" className="form-label">Trạng thái</label>
+                            <label htmlFor="emailTenant" className="form-label">Email Người Thuê</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="status"
-                                name="status"
-                                value={motelRoom.status}
+                                id="emailTenant"
+                                name="emailTenant"
+                                value={motelRoom.emailTenant}
                                 onChange={handleChange}
-                                required
                             />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Thuộc thành phố</label>
-                            <select onChange={handleChangeSelect}
-                                    className='form-select' required>
-                                {renderListCity()}
-                            </select>
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Thuộc thuộc quận huyện (thị xã)</label>
-                            <select name='district' onChange={handleChangeDistrictSelect}
-                                    className='form-select' required>
-                                {renderListDistrict()}
-                            </select>
                         </div>
                         <button type="submit" className="btn btn-primary">Tạo phòng</button>
                     </form>

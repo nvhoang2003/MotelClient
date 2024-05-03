@@ -1,7 +1,7 @@
 "use client"
 import {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {deleteApi, getApi, getProfile} from "../../../dataProvider/agent";
+import {getApi, getProfile} from "../../../dataProvider/agent";
 
 export default function ListOwnerMotel() {
     let [listMotel, setListMotel] = useState([]);
@@ -33,10 +33,7 @@ export default function ListOwnerMotel() {
                 <td>{motel.amount}</td>
                 <td>{motel.acreage}</td>
                 <td>{motel.description}</td>
-                <td><a href={`/owner/motel/edit/${motel.id}`} className='btn btn-warning'>Sửa</a></td>
-                <td>
-                    <button onClick={() => deleteMotel(motel.id)} className='btn btn-danger'>Xóa</button>
-                </td>
+                <td><a href={`/tenant/motel/${motel.id}`} className='btn btn-info'>Xem Hóa Đơn</a></td>
             </tr>)
         });
     }
@@ -66,17 +63,17 @@ async function fetchData() {
     let resUser = await getProfile();
     let user = resUser.data;
     let userId = user.id;
-    const res = await getApi(`/api/motels/user/${userId}`);
+    const res = await getApi(`/api/motelsOfTenant`);
     let listMotel = res.data;
-    for (let i = 0; i < listMotel.length; i++) {
-        let motel = listMotel[i];
-        if (typeof motel.district === "object") continue;
-        let id = motel.district;
-        let resDistrict = await getApi(`/api/districts/getById/${id}`);
-        listMotel[i] = {
-            ...motel, district: resDistrict.data
-        };
-    }
+    // for (let i = 0; i < listMotel.length; i++) {
+    //     let motel = listMotel[i];
+    //     if (typeof motel.district === "object") continue;
+    //     let id = motel.district;
+    //     let resDistrict = await getApi(`/api/districts/getById/${id}`);
+    //     listMotel[i] = {
+    //         ...motel, district: resDistrict.data
+    //     };
+    // }
     return listMotel;
 }
 

@@ -2,13 +2,13 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import 'bootstrap/dist/css/bootstrap.css';
-import { getApi, getCity, getDistrict, postApi, putApi } from '../../../../../dataProvider/agent';
+import { getApi, getProfile, postApi, putApi} from '../../../../../dataProvider/agent';
 import { router } from "next/client";
 export default function EditMotel({ params }) {
     const router = useRouter();
     const { id } = params;
     const [motel, setMotel] = useState({
-        acreage: '', amount: '', description: '', status: '', districtId: '',
+        acreage: '', amount: '', description: '', emailTenant: '', districtId: '',
     });
     useEffect(() => {
         if (id) {
@@ -26,10 +26,14 @@ export default function EditMotel({ params }) {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        delete motel.id;
-        delete motel.createdBy;
-        delete motel.district;
-        const res = await postApi(`api/motels/${id}/update`, motel);
+
+        let userProfileRes = await getProfile();
+        let user = userProfileRes.data;
+        let submitData = {
+            ...motel, createdBy: user
+        }
+
+        const res = await putApi(`api/motels/${id}`, submitData);
         console.log(res)
         if (res.status < 400) {
             console.log("Save successful");
@@ -57,8 +61,8 @@ export default function EditMotel({ params }) {
                     onChange={handleInputChange} />
             </div>
             <div className="form-group mb-3">
-                <label>Status</label>
-                <input type="text" className="form-control" name="status" value={motel.status}
+                <label>Email Người Thuê</label>
+                <input type="text" className="form-control" name="emailTenant" value={motel.emailTenant}
                     onChange={handleInputChange} />
             </div>
             <button type="submit" className="btn btn-primary">Update Motel</button>

@@ -163,6 +163,15 @@ const loginByAdmin = (payload) => {
   return postApi("rest/auth/login", payload);
 };
 
+//motel
+const getMotelById = (id) => {
+    return getApi(`api/motels/${id}`);
+}
+
+const getTenantMotel = () => {
+  return getApi('api/motelsOfTenant');
+}
+
 //Address
 //City
 function getCity() {
@@ -182,7 +191,7 @@ const deleteCity = (id) => {
 };
 
 function getDistrict(id) {
-  return getApi("api/districts/getList/" + id);
+    return getApi("api/districts/getList/" + id);
 }
 
 function getProfile() {
@@ -194,15 +203,15 @@ function updateProfile(id, payload) {
 }
 
 function addDistrict(payload) {
-  return postApi("api/districts", payload);
+    return postApi("api/districts", payload);
 }
 
 function editDistrict(id, payload) {
-  return putApi("api/districts/" + id, payload);
+    return putApi("api/districts/" + id, payload);
 }
 
 function deleteDistrict(id) {
-  return deleteApi("api/districts/" + id);
+    return deleteApi("api/districts/" + id);
 }
 
 //user
@@ -233,4 +242,5 @@ export {
   postApi,
   putApi,
   deleteApi,
+  getTenantMotel
 };
