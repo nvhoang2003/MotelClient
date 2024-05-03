@@ -168,6 +168,10 @@ const getMotelById = (id) => {
     return getApi(`api/motels/${id}`);
 }
 
+const getTenantMotel = () => {
+  return getApi('api/motelsOfTenant');
+}
+
 //Address
 //City
 function getCity() {
@@ -238,4 +242,5 @@ export {
   postApi,
   putApi,
   deleteApi,
+  getTenantMotel
 };

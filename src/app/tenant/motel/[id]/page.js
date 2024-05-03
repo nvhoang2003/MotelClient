@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { getMotelById } from '../../../../dataProvider/agent';
-import { Box, Card, CardActions, CardContent, CardHeader, Stack, Typography } from '@mui/material';
+import { Box, Card, CardActions, CardContent, CardHeader, Button, Typography } from '@mui/material';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 export default function page({ params }) {
@@ -20,6 +20,7 @@ export default function page({ params }) {
         } catch (error) {
             snackbarUtil.error(error)
         }
+    }
 
     useEffect(() => {
         if (params.id) {
