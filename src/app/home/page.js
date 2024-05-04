@@ -2,14 +2,14 @@
 import "bootstrap/dist/css/bootstrap.css"
 import "../../../public/assets/css/dashboard_home.css"
 import "../../../public/assets/vendor/bootstrap-icons/bootstrap-icons.css"
-import { getApi, postApi, putApi, deleteApi } from "../../dataProvider/agent";
-import { useEffect, useState } from "react";
+import {getApi, postApi, putApi, deleteApi} from "../../dataProvider/agent";
+import {useEffect, useState} from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { Box } from "@mui/material";
+import {Box} from "@mui/material";
 import 'react-quill/dist/quill.bubble.css'; // Import the bubble theme stylesheet
 
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill"), {ssr: false});
 
 
 export default function page() {
@@ -57,7 +57,7 @@ export default function page() {
                                 <div className="avatar avatar-story me-2">
                                     <a href="#!">
                                         <img className="avatar-img rounded-circle"
-                                            src={userImageLink} alt="" width="40" height="40" />
+                                             src={userImageLink} alt="" width="40" height="40"/>
                                     </a>
                                 </div>
                                 <div>
@@ -75,15 +75,14 @@ export default function page() {
                             </div>
                         </div>
                     </div>
-                    <div className='post-title'>
-                        <p className='fw-bold fs-5'>{post.title}</p>
-                    </div>
                     <div className="card-body">
-
-                        <Box sx={{ width: "100%" }}>
+                        <div className='post-title'>
+                            <p className='fw-bold fs-5'>{post.title}</p>
+                        </div>
+                        <Box sx={{width: "100%"}}>
                             {/* //  <div className='post-content'> */}
                             <ReactQuill
-                                theme='bubble'  
+                                theme='bubble'
                                 // modules={{}}
                                 readOnly={true}
                                 value={post.content}
@@ -106,7 +105,7 @@ export default function page() {
                         <div className="d-flex mb-3">
                             <form className="nav nav-item w-100 position-relative">
                                 <textarea className="form-control pe-5 bg-light" rows="1"
-                                    placeholder="Thêm bình luận"></textarea>
+                                          placeholder="Thêm bình luận"></textarea>
                                 <button
                                     className="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0"
                                     type="submit">
@@ -136,7 +135,7 @@ export default function page() {
                         {districts.map((district, index) => {
                             return (<div className="form-check form-check-inline">
                                 <input className="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                    value="option1" />
+                                       value="option1"/>
                                 <label className="form-check-label" htmlFor="inlineCheckbox1">{district.name}</label>
                             </div>)
                         })}
