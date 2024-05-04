@@ -33,7 +33,7 @@ export default function ListOwnerMotel() {
                 <td>{motel.amount}</td>
                 <td>{motel.acreage}</td>
                 <td>{motel.description}</td>
-                <td><a href={`/tenant/motel/${motel.id}`} className='btn btn-info'>Xem Hóa Đơn</a></td>
+                <td><a href={`/tenant/payment_history`} className='btn btn-info'>Xem Hóa Đơn</a></td>
             </tr>)
         });
     }
